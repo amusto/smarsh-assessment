@@ -22,7 +22,7 @@ public class CacheRunner implements CommandLineRunner {
     private final String url;
 
     public CacheRunner(UrlCacheService cacheService,
-                       @Value("${app.url:https://example.com}") String url) {
+                       @Value("${app.url:}") String url) {
         this.cacheService = cacheService;
         this.url = url;
     }
@@ -33,6 +33,11 @@ public class CacheRunner implements CommandLineRunner {
         // traced together (the CLI analog of a per-request correlation ID).
         MDC.put(RUN_ID, UUID.randomUUID().toString());
         try {
+            if (url == null || url.isBlank()) {
+                log.error("No URL provided. Pass one with --app.url=<url>");
+                return;
+            }
+
             CachedContent result = cacheService.get(url);
 
             System.out.println("Original fetch date: " + result.fetchedDate());

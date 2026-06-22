@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -26,5 +27,15 @@ class CacheRunnerTest {
         // A fetch failure is caught and logged, not propagated — the program
         // does not crash with a stack-trace dump.
         assertThatCode(runner::run).doesNotThrowAnyException();
+    }
+
+    @Test
+    void run_whenNoUrlProvided_logsUsageAndDoesNotCallService() {
+        CacheRunner runner = new CacheRunner(service, "");
+
+        runner.run();
+
+        // A missing URL is a usage error: the program must not attempt a fetch.
+        verifyNoInteractions(service);
     }
 }

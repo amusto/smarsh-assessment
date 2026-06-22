@@ -32,7 +32,8 @@ Each run:
 
 ## How to run
 
-The URL is configurable (default in `application.properties`); override per run:
+A URL is **required** — provide it via `--app.url=<url>` (or set `app.url` in
+`application.properties`):
 
 ```bash
 ./gradlew bootRun --args='--app.url=https://example.com'
@@ -110,6 +111,9 @@ round-trip (temp directory), and graceful failure handling (non-zero exit).
    program ran correctly and reported the outcome. In a CI/automation context it
    would return a non-zero exit code to signal failure to callers; that is a
    one-line change.
+10. **A URL is required.** If none is provided (`--app.url` / `app.url` unset),
+    the program logs a usage message and exits without attempting a fetch — it
+    does not fall back to a default URL.
 
 ## Architecture
 
