@@ -22,7 +22,7 @@ self-contained commit so the history tells the development story.
 | 6 | CLI adapter + output | `feat: wire CommandLineRunner, config, and prints` | ✅ |
 | 7 | Tests | `test: cover service hit/miss and file store round-trip` | ✅ |
 | 8 | Exception handling + logging | `feat: add error handling and troubleshooting logging` | ✅ |
-| 9 | Traceability (run correlation ID) | `feat: add per-run correlation ID (runId) to MDC and logs` | ⬜ |
+| 9 | Traceability (run correlation ID) | `feat: add per-run correlation ID (runId) to MDC and logs` | ✅ |
 | 10 | ADRs + Docsify | `docs: finalize ADRs and add Docsify rendering` | ⬜ |
 | 11 | Web interface (stretch) | `feat: add optional web adapter over UrlCacheService` | 🎯 |
 
