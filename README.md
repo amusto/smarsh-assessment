@@ -48,11 +48,45 @@ java -jar build/libs/url-cache-0.0.1-SNAPSHOT.jar --app.url=https://example.com
 Run it twice with the same URL: the first run fetches from the web; the second
 serves from the cache and prints the **original** fetch date.
 
+## Use cases
+
+### 1. First fetch (cache miss → fetched from web)
+
+```bash
+rm -rf cache/                                              # start with an empty cache
+./gradlew bootRun --args='--app.url=https://example.com'
+```
+
+Logs `Cache miss ... fetching from web`, prints `Source: WEB` and a fresh date,
+saves the content to `cache/<sha256>.txt`, then exits.
+
+### 2. Repeat fetch (cache hit → served from file)
+
+```bash
+./gradlew bootRun --args='--app.url=https://example.com'
+```
+
+Logs `Cache hit ... reading from local file`, prints `Source: CACHE` and the
+**same original date** as the first run — the page is never fetched twice.
+
+### 3. Invalid or unreachable URL (handled gracefully)
+
+```bash
+./gradlew bootRun --args='--app.url=https://does-not-exist.example'
+```
+
+Fetch failures are caught at the runner boundary: a single clear error line is
+logged (no stack-trace dump) and the program exits with a **non-zero exit code**
+to signal failure to callers. Nothing is written to the cache.
+
 ## How to test
 
 ```bash
 ./gradlew test
 ```
+
+Covers the cache hit/miss behavior (mocked collaborators), the file-store
+round-trip (temp directory), and graceful failure handling (non-zero exit).
 
 ## Assumptions
 
