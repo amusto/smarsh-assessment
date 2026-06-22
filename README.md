@@ -105,6 +105,11 @@ round-trip (temp directory), and graceful failure handling (non-zero exit).
    output (date, URL, content) goes to standard out; diagnostic messages go
    through a logger.
 8. **One URL per run.** The design extends naturally to multiple URLs.
+9. **A fetch failure is handled gracefully** — a clear message is logged (no
+   stack-trace dump) and the program exits normally (exit code 0), because the
+   program ran correctly and reported the outcome. In a CI/automation context it
+   would return a non-zero exit code to signal failure to callers; that is a
+   one-line change.
 
 ## Architecture
 

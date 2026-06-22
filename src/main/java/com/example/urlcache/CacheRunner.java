@@ -8,20 +8,18 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.ExitCodeGenerator;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
 @Component
-public class CacheRunner implements CommandLineRunner, ExitCodeGenerator {
+public class CacheRunner implements CommandLineRunner {
 
     private static final Logger log = LoggerFactory.getLogger(CacheRunner.class);
     private static final String RUN_ID = "runId";
 
     private final UrlCacheService cacheService;
     private final String url;
-    private int exitCode = 0;
 
     public CacheRunner(UrlCacheService cacheService,
                        @Value("${app.url:https://example.com}") String url) {
@@ -43,15 +41,11 @@ public class CacheRunner implements CommandLineRunner, ExitCodeGenerator {
             System.out.println("Content:");
             System.out.println(result.content());
         } catch (ContentFetchException e) {
+            // A fetch failure is a handled outcome, not a crash: log a clear
+            // message and let the program exit normally.
             log.error("Could not retrieve content for {}: {}", url, e.getMessage());
-            exitCode = 1;
         } finally {
             MDC.remove(RUN_ID);
         }
-    }
-
-    @Override
-    public int getExitCode() {
-        return exitCode;
     }
 }
