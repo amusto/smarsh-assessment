@@ -7,3 +7,5 @@
   - [0004 — Last-modified as fetch date](adr/0004-last-modified-as-fetch-date.md)
   - [0005 — Output vs logging](adr/0005-output-vs-logging.md)
   - [0006 — Per-run correlation ID](adr/0006-per-run-correlation-id.md)
+  - [0007 — Cache-aside read-through](adr/0007-cache-aside-read-through.md)
+  - [0008 — Graceful failure at boundary](adr/0008-graceful-failure-at-boundary.md)

@@ -140,6 +140,16 @@ This is a deliberate emphasis of the exercise:
 
 Key decisions are recorded as ADRs under `docs/adr/` (rendered with Docsify).
 
+## Documentation (Docsify)
+
+The Architecture Decision Records render as a small browsable site via
+[Docsify](https://docsify.js.org) — no build step, it reads the markdown directly.
+
+```bash
+npx docsify-cli serve docs
+# then open http://localhost:3000
+```
+
 ## Optional enhancement (not part of the core requirement)
 
 A thin **web interface** could expose the cached content for browsing (e.g.
