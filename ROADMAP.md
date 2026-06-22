@@ -18,9 +18,9 @@ self-contained commit so the history tells the development story.
 | 2 | Domain model + interfaces | `feat: add CachedContent model and fetcher/store interfaces` | ✅ |
 | 3 | Web fetcher | `feat: implement HttpWebContentFetcher` | ✅ |
 | 4 | File cache store | `feat: implement FileCacheStore (read/write/exists/date)` | ✅ |
-| 5 | Cache service | `feat: add UrlCacheService cache-hit/miss orchestration` | 🚧 |
-| 6 | CLI adapter + output | `feat: wire CommandLineRunner, config, and prints` | ⏭️ |
-| 7 | Tests | `test: cover service hit/miss and file store round-trip` | ⬜ |
+| 5 | Cache service | `feat: add UrlCacheService cache-hit/miss orchestration` | ✅ |
+| 6 | CLI adapter + output | `feat: wire CommandLineRunner, config, and prints` | 🚧 |
+| 7 | Tests | `test: cover service hit/miss and file store round-trip` | ⏭️ |
 | 8 | Exception handling + logging | `feat: add error handling and troubleshooting logging` | ⬜ |
 | 9 | Traceability (run correlation ID) | `feat: add per-run correlation ID (runId) to MDC and logs` | ⬜ |
 | 10 | ADRs + Docsify | `docs: finalize ADRs and add Docsify rendering` | ⬜ |
@@ -57,7 +57,7 @@ and `CacheStore` **interfaces** — the seams that absorb changing requirements.
 read date from the store so both paths derive the date identically.
 **Done when:** the "fetch only once" rule is implemented in one place.
 
-### Phase 6 — CLI adapter + output ⬜
+### Phase 6 — CLI adapter + output 🚧
 `CommandLineRunner` invokes the service, prints **date / URL / content** to
 stdout, then the app exits. URL + cache dir from config (`@Value`/properties).
 **Done when:** `./gradlew bootRun --args='--app.url=...'` works end to end.
