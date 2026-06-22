@@ -175,12 +175,14 @@ prints, and shuts down. Tracked in the roadmap as a stretch goal.
 
 ```
 src/main/java/com/example/urlcache/
-  UrlCacheApplication.java        # Spring Boot entry point
-  CacheRunner.java                # CommandLineRunner CLI adapter + prints
-  model/CachedContent.java        # url, content, fetchedDate, source (WEB|CACHE)
-  fetch/WebContentFetcher.java    # interface
-  fetch/HttpWebContentFetcher.java
-  cache/CacheStore.java           # interface
-  cache/FileCacheStore.java
-  service/UrlCacheService.java    # cache hit/miss orchestration
+  UrlCacheApplication.java          # Spring Boot entry point
+  CacheRunner.java                  # CommandLineRunner CLI adapter + prints
+  model/CachedContent.java          # url, content, fetchedDate, source (WEB|CACHE)
+  model/ContentSource.java          # WEB | CACHE
+  fetch/WebContentFetcher.java      # interface
+  fetch/HttpWebContentFetcher.java  # JDK HttpClient implementation
+  cache/CacheStore.java             # interface
+  cache/FileCacheStore.java         # file-backed, SHA-256 filenames
+  service/UrlCacheService.java      # cache hit/miss orchestration
+  common/ContentFetchException.java # unchecked fetch/IO failure
 ```
