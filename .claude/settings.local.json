@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/armandomusto/.claude/skills/apply-architecture-docs/references/**)",
+      "Read(//Users/armandomusto/.claude/skills/apply-architecture-docs/**)"
+    ]
+  }
+}

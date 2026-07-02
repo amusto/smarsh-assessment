@@ -1,4 +1,6 @@
 - [Overview](/)
+- [Architecture overview](architecture-overview.md)
+- [Assessment pattern map](assessment-pattern-map.md)
 
 - ADRs
   - [0001 — Delivery-agnostic core](adr/0001-layered-delivery-agnostic-core.md)
@@ -9,3 +11,11 @@
   - [0006 — Per-run correlation ID](adr/0006-per-run-correlation-id.md)
   - [0007 — Cache-aside read-through](adr/0007-cache-aside-read-through.md)
   - [0008 — Graceful failure at boundary](adr/0008-graceful-failure-at-boundary.md)
+
+- Patterns
+  - [Ports & Adapters](patterns/ports-and-adapters.md)
+  - [Cache-aside read-through](patterns/cache-aside.md)
+  - [Delivery-agnostic exceptions](patterns/delivery-agnostic-exceptions.md)
+  - [Correlation-ID traceability](patterns/correlation-id-traceability.md)
+  - [Output vs. diagnostics](patterns/output-vs-diagnostics.md)
+  - [Web adapter (Proposed)](patterns/web-adapter.md)
