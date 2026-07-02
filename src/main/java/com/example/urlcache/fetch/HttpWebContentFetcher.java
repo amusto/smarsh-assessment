@@ -1,6 +1,7 @@
 package com.example.urlcache.fetch;
 
-import com.example.urlcache.common.ContentFetchException;
+import com.example.urlcache.common.InvalidUrlException;
+import com.example.urlcache.common.RemoteFetchException;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -16,21 +17,27 @@ public class HttpWebContentFetcher implements WebContentFetcher {
 
     @Override
     public String fetch(String url) {
+        URI uri;
+        // URI.create() throws on malformed URLs, so we catch it here.
         try {
-            HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .GET()
-                .build();
-            HttpResponse<String> response =
-                client.send(request, HttpResponse.BodyHandlers.ofString());
+            uri = URI.create(url);
+        } catch (IllegalArgumentException e) {
+            // Previously uncaught -> crashed the program on a malformed URL.
+            throw new InvalidUrlException(url, e);
+        }
+
+        try {
+            HttpResponse<String> response = client.send(
+                HttpRequest.newBuilder(uri).GET().build(),
+                HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() != 200) {
-                throw new ContentFetchException(
+                throw new RemoteFetchException(
                     "Unexpected status " + response.statusCode() + " for " + url);
             }
             return response.body();
         } catch (IOException | InterruptedException e) {
-            Thread.currentThread().interrupt();   // restore interrupt flag
-            throw new ContentFetchException("Failed to fetch " + url, e);
+            Thread.currentThread().interrupt();
+            throw new RemoteFetchException("Failed to fetch " + url, e);
         }
     }
 }

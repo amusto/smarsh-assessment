@@ -1,6 +1,6 @@
 package com.example.urlcache;
 
-import com.example.urlcache.common.ContentFetchException;
+import com.example.urlcache.common.RemoteFetchException;
 import com.example.urlcache.service.UrlCacheService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,10 +22,10 @@ class CacheRunnerTest {
     @Test
     void run_whenFetchFails_handlesGracefullyWithoutCrashing() {
         CacheRunner runner = new CacheRunner(service, URL);
-        when(service.get(URL)).thenThrow(new ContentFetchException("Failed to fetch " + URL));
+        // Any UrlCacheException subtype is caught at the boundary; the runner
+        // does not need to know which one.
+        when(service.get(URL)).thenThrow(new RemoteFetchException("Failed to fetch " + URL));
 
-        // A fetch failure is caught and logged, not propagated — the program
-        // does not crash with a stack-trace dump.
         assertThatCode(runner::run).doesNotThrowAnyException();
     }
 
@@ -35,7 +35,6 @@ class CacheRunnerTest {
 
         runner.run();
 
-        // A missing URL is a usage error: the program must not attempt a fetch.
         verifyNoInteractions(service);
     }
 }
