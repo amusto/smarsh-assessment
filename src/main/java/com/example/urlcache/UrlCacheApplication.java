@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class UrlCacheApplication {
 
 	public static void main(String[] args) {
+		// Runs the passed in args against CacheRunner (@Bean)
 		SpringApplication.run(UrlCacheApplication.class, args);
 	}
 

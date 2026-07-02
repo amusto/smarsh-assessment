@@ -1,6 +1,6 @@
 package com.example.urlcache;
 
-import com.example.urlcache.common.ContentFetchException;
+import com.example.urlcache.common.UrlCacheException;
 import com.example.urlcache.model.CachedContent;
 import com.example.urlcache.service.UrlCacheService;
 import org.slf4j.Logger;
@@ -21,8 +21,10 @@ public class CacheRunner implements CommandLineRunner {
     private final UrlCacheService cacheService;
     private final String url;
 
-    public CacheRunner(UrlCacheService cacheService,
-                       @Value("${app.url:}") String url) {
+    public CacheRunner(
+        UrlCacheService cacheService,
+        @Value("${app.url:}") String url
+    ) {
         this.cacheService = cacheService;
         this.url = url;
     }
@@ -45,10 +47,10 @@ public class CacheRunner implements CommandLineRunner {
             System.out.println("Source: " + result.source());
             System.out.println("Content:");
             System.out.println(result.content());
-        } catch (ContentFetchException e) {
-            // A fetch failure is a handled outcome, not a crash: log a clear
-            // message and let the program exit normally.
-            log.error("Could not retrieve content for {}: {}", url, e.getMessage());
+        } catch (UrlCacheException e) {
+            // Catch the BASE type: any current or future subtype is handled here
+            // with no change to this boundary (Open/Closed).
+            log.error("Could not retrieve content for {}: {}", url, e.userMessage());
         } finally {
             MDC.remove(RUN_ID);
         }
